@@ -22,9 +22,9 @@ var mode1 = {
   numShips: 3,
   shipLength: 3,
   shipsSunk: 0,
-  ships: [{ locations: ["06", "16", "26"], hits: ["", "", ""] },
-          { locations: ["24", "34", "44"], hits: ["", "", ""] },
-          { locations: ["10", "11", "12"], hits: ["", "", ""] }],
+  ships: [{ locations: ["0", "0", "0"], hits: ["", "", ""] },
+          { locations: ["0", "0", "0"], hits: ["", "", ""] },
+          { locations: ["0", "0", "0"], hits: ["", "", ""] }],
           fire: function(guess) {
             for (var i = 0; i < this,numShips; i++) {
                  var ship = this.ships[i];
@@ -96,7 +96,7 @@ var mode1 = {
             view.displayHit("12");
             view.displayMiss("25");
             view.displayHit("26");
-            view.displayMessage("Tap tap, is this thing on?")
+            view.displayMessage("Tap tap, is this thing on?"),
             
             console.log(parseGuess("A0"));
             console.log(parseGuess("B6"));
@@ -118,7 +118,78 @@ var mode1 = {
             controller.processGuess("B1");
             controller.processGuess("B2");
 
-            function handleFireButton() {
-              //获取表单中的玩家输入并交控制器
+            function init()  {
+              var fireButton = document.getElementById("fireButton");
+              fireButton.oncelick = handleFireButton;
+              var guessInput = document.getElementById("guessInPut");
+              guessInput.onkeypress = handleKeyPress;
+
+              model.generateShipLocations();
             }
+            
+            function handleFireButton() {
+              var guessInput = document.getElementById("guessInput");
+              var guess = guessInput.value;
+              controller.processGuess(guess);
+
+              guessInput.value = "";
+            }
+
+            function handleKeyPress(e) {
+              var fireButton = document.getElementById("fireButton");
+              if (e.keyCode === 13) {
+                fireButton.click();
+                return false;
+              }
+            }
+
+            generateShipLocations: function () {
+              var locations;
+              for (var i = 0; i < this.numShips; i++) {
+                do {
+                  locations = this.generataeShip();
+                } while (this.collision(locations));
+                this.ships[i].locations = locations;
+              }
+            }
+
+            generataeShip: function() {
+              var direction = Math.floor(Math.random() * 2);
+              var row, col;
+
+              if (direction === 1) {
+                row = Math.floor(Math.random() * this.boardSize);
+                col = Math.floor(Math.random() * (this.boardSize = this.shipLength));
+              } else {
+                row = Math.floor(Math.random() * (this.boardSize = this.shipLength));
+                col = Math.floor(Math.random() * this.boardSize);
+              }
+              
+              var newShipLocations = [];
+              for (var i = 0; i < this.shipLength; i++) {
+                   if (direction === 1) {
+                     newShipLocations.push(row + "" + (col + 1));
+                   } else {
+                     newShipLocations.push((row + i) + "" + col);
+                   }
+              }
+              return newShipLocations;
+            },
+
+            collision: function(locations) {
+              for (var i = 0; i < this.numShips; i++) {
+                var ship = model.ships[i];
+                for (var j = 0; j < locations.length; j++) {
+                if (ship.locations.indexOf(locations[j]) >= 0) {
+                return true;
+              }
+            }
+          }
+          return false;
+        }
+            
+            windows.onload = init;
+
+        
+
 
