@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>object</title>
+  </head>
+  <body>
+  <script>
+  var audi = {
+    make: 'audi' ,
+    model: 'A6' ,
+    year: 2016 ,
+    color: 'black' ,
+    passengers: 4 ,
+    convertible: false ,
+    mileage: 500 ,
+  }
+  var BugattiVeyron ={
+    make: 'bugatti' ,
+    model: 'veyron' ,
+    year: 2017 ,
+    color: 'pink' ,
+    passengers: 2 ,
+    convertible: true ,
+    mileage: 2000000 ,
+  }
+  function isnewcar(car){
+    if(car.year >= 2017 && car.mileage <= 10000){
+      document.write(car.make + "是破车<br>")
+    }else{
+      document.write(car.make + "是破车，没几把用<br>")
+    }
+    document.write()
+  }
+  isnewcar(audi)
+  isnewcar(bugatti)
+  </script>
+  </body>
+</html>

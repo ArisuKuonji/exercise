@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>object</title>
+  </head>
+  <body>
+  <script>
+  var audi = {
+    make: 'audi' ,
+    model: 'A6' ,
+    year: 2016 ,
+    color: 'black' ,
+    passengers: 4 ,
+    convertible: false ,
+    mileage: 500 ,
+    drive: function () {
+      if(this.started){
+        alert("zoom zoom")
+      }else{
+        alert("请先启动汽车");
+      }
+    },
+    start: function(){
+      this.started = true;
+    },
+    stop: function(){
+      this.started = false;
+    }
+  }
+  audi.start();
+  audi.drive();
+  audi.stop();
+  </script>
+  </body>
+</html>
